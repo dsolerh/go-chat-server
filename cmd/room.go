@@ -24,6 +24,15 @@ type room struct {
 	clients map[*client]bool
 }
 
+func NewRoom() *room {
+	return &room{
+		forward: make(chan []byte),
+		join:    make(chan *client),
+		leave:   make(chan *client),
+		clients: make(map[*client]bool),
+	}
+}
+
 func (r *room) run() {
 	for {
 		select {
