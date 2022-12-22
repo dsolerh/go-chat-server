@@ -7,6 +7,11 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+const (
+	socketBufferSize  = 1024
+	messageBufferSize = 256
+)
+
 type room struct {
 	// forward is a channel that holds incoming messages
 	// that should be forwarded to the other clients.
@@ -37,11 +42,6 @@ func (r *room) run() {
 		}
 	}
 }
-
-const (
-	socketBufferSize  = 1024
-	messageBufferSize = 256
-)
 
 var upgrader = &websocket.Upgrader{ReadBufferSize: socketBufferSize, WriteBufferSize: socketBufferSize}
 
