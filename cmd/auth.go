@@ -75,7 +75,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, fmt.Sprintf("Error when trying to get user from provider %s: %s", provider, err), http.StatusInternalServerError)
 			return
 		}
-		authCookieValue := objx.New(map[string]interface{}{
+		authCookieValue := objx.New(Object{
 			"name": user.Name(),
 		}).MustBase64()
 		http.SetCookie(w, &http.Cookie{

@@ -23,7 +23,7 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
 	})
 
-	data := map[string]interface{}{
+	data := Object{
 		"Host": r.Host,
 	}
 	if authCookie, err := r.Cookie("auth"); err == nil {
