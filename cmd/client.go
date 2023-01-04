@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/stretchr/objx"
 )
 
 // client represents a single chating user.
@@ -30,7 +31,10 @@ func (c *client) read() {
 		}
 		msg.Timestamp = time.Now()
 		msg.Name = c.userData["name"].(string)
-		c.room.forward <- msg
+		if avatarURL, ok := c.userData["avatar_url"]; ok {
+			msg.AvatarURL = avatarURL.(string)
+		}
+		c.room.forward <- &msg
 	}
 }
 
