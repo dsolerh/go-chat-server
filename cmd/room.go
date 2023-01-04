@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gorilla/websocket"
+	"github.com/stretchr/objx"
 )
 
 const (
@@ -76,10 +77,17 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	authCookie, err := req.Cookie("auth")
+	if err != nil {
+		log.Fatal("Failed to get the auth cookie:", err)
+		return
+	}
+
 	client := &client{
-		socket: socket,
-		send:   make(chan *message, messageBufferSize),
-		room:   r,
+		socket:   socket,
+		send:     make(chan *message, messageBufferSize),
+		room:     r,
+		userData: Object(objx.MustFromBase64(authCookie.Value)),
 	}
 	r.join <- client
 	defer func() { r.leave <- client }()
