@@ -16,14 +16,12 @@ type templateHandler struct {
 	templ    *template.Template
 }
 
-type Object map[string]interface{}
-
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
 		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
 	})
 
-	data := Object{
+	data := objx.Map{
 		"Host": r.Host,
 	}
 	if authCookie, err := r.Cookie("auth"); err == nil {

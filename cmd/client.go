@@ -16,7 +16,7 @@ type client struct {
 	// room is the room this client is chating in.
 	room *room
 	// the user information
-	userData Object
+	userData objx.Map
 }
 
 func (c *client) read() {
