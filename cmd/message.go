@@ -6,4 +6,5 @@ type message struct {
 	Name      string
 	Message   string
 	Timestamp time.Time
+	AvatarURL string
 }
