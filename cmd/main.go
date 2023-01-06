@@ -23,7 +23,7 @@ func main() {
 		google.New("825102912466-bcqv49ighbhpdkeqgmb5v1a6buhcgjlv.apps.googleusercontent.com", "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", "http://localhost:8080/auth/callback/google"),
 	)
 
-	r := NewRoom(UseAuthAvatar)
+	r := NewRoom(UseGravatarAvatar)
 
 	http.Handle("/", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
