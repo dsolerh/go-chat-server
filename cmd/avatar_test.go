@@ -33,7 +33,7 @@ func TestGravatarAvatar(t *testing.T) {
 	var gravatarAvatar GravatarAvatar
 	client := new(client)
 	client.userData = objx.Map{
-		"email": "test@example.com",
+		"userid": "55502f40dc8b7c769880b10874abc9d0",
 	}
 	url, err := gravatarAvatar.GetAvatarURL(client)
 	if err != nil {
