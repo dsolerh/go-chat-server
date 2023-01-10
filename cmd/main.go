@@ -12,7 +12,11 @@ import (
 )
 
 // set the active Avatar implementation
-var avatars Avatar = UseFileSystemAvatar
+var avatars Avatar = TryAvatar{
+	UseFileSystemAvatar,
+	UseAuthAvatar,
+	UseGravatarAvatar,
+}
 
 func main() {
 	var addr = flag.String("addr", ":8080", "The addr of the application")
