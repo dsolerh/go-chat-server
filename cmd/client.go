@@ -31,9 +31,8 @@ func (c *client) read() {
 		}
 		msg.Timestamp = time.Now()
 		msg.Name = c.userData["name"].(string)
-		msg.AvatarURL, err = c.room.avatar.GetAvatarURL(c)
-		if err != nil {
-			log.Println("Invalid avatar:", err)
+		if avatarURL, ok := c.userData["avatar_url"]; ok {
+			msg.AvatarURL = avatarURL.(string)
 		}
 		c.room.forward <- &msg
 	}
