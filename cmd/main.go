@@ -26,6 +26,7 @@ func main() {
 	r := NewRoom(UseGravatarAvatar)
 
 	http.Handle("/", MustAuth(&templateHandler{filename: "chat.html"}))
+	http.Handle("/upload", MustAuth(&templateHandler{filename: "upload.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &http.Cookie{
@@ -38,6 +39,8 @@ func main() {
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	})
 	http.HandleFunc("/auth/", loginHandler)
+	http.HandleFunc("/uploader", uploadHandler)
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars/"))))
 	http.Handle("/room", r)
 
 	// get the room going
