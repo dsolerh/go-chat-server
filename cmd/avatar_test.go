@@ -1,6 +1,9 @@
 package main
 
 import (
+	"io/ioutil"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/objx"
@@ -41,5 +44,22 @@ func TestGravatarAvatar(t *testing.T) {
 	}
 	if url != "//www.gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0" {
 		t.Errorf("GravatarAvatar.GetAvatarURL wrongly returned %s", url)
+	}
+}
+
+func TestFileSystemAvatar(t *testing.T) {
+	filename := filepath.Join("avatars", "abc.jpg")
+	ioutil.WriteFile(filename, []byte{}, 0777)
+	defer os.Remove(filename)
+
+	var fileSystemAvatar FileSystemAvatar
+	client := new(client)
+	client.userData = objx.Map{"userid": "abc"}
+	url, err := fileSystemAvatar.GetAvatarURL(client)
+	if err != nil {
+		t.Error("FileSystemAvatar.GetAvatarURL should not return an error")
+	}
+	if url != "/avatars/abc.jpg" {
+		t.Errorf("FileSystemAvatar.GetAvatarURL wrongly returned %s", url)
 	}
 }
