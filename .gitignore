@@ -1,2 +1,5 @@
 build/chat
 cmd/avatars/*
+cmd
+.DS_Store
+.DS_Store
